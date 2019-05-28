@@ -104,7 +104,6 @@ export default class DaySelector extends Component {
         // update.
         if (Math.abs(dx) > threshold && valid) {
           // Animate to the outside of the device the current scene.
-          LayoutAnimation.linear(() => {
             // After that animation, update the focus date and then swipe in
             // the corresponding updated scene.
             this.props.onFocus && this.props.onFocus(newFocus);
@@ -116,19 +115,18 @@ export default class DaySelector extends Component {
                 this._slide(0)
               }, 0)
             }, 0)
-          });
           this._slide(dx > 0 ? maxOffset : -maxOffset);
           return;
         } else {
           // Otherwise cancel the animation.
-          LayoutAnimation.spring();
+
           this._slide(0);
         }
       },
       onPanResponderTerminate: (evt, gestureState) => {
         // Another component has become the responder, so this gesture
         // should be cancelled
-        LayoutAnimation.spring();
+
         this._slide(0)
       },
       onShouldBlockNativeResponder: (evt, gestureState) => {
