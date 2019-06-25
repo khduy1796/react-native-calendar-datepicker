@@ -218,6 +218,8 @@ export default class Calendar extends Component {
               dayTodayText={this.props.dayTodayText}
               daySelectedText={this.props.daySelectedText}
               dayDisabledText={this.props.dayDisabledText}
+              // allowFontScaling
+              allowFontScaling={this.props.allowFontScaling}
               /> :
             this.state.stage === MONTH_SELECTOR ?
             <MonthSelector
@@ -230,6 +232,8 @@ export default class Calendar extends Component {
               monthText={this.props.monthText}
               monthDisabledText={this.props.monthDisabledText}
               selectedText={this.props.monthSelectedText}
+              // allowFontScaling
+              allowFontScaling={this.props.allowFontScaling}
               /> :
             this.state.stage === YEAR_SELECTOR ?
             <YearSelector
@@ -242,6 +246,8 @@ export default class Calendar extends Component {
               maximumTrackTintColor={this.props.yearMaxTintColor}
               yearSlider={this.props.yearSlider}
               yearText={this.props.yearText}
+              // allowFontScaling
+              allowFontScaling={this.props.allowFontScaling}
               /> :
             null
           }
