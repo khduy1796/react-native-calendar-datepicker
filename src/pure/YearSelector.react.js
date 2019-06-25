@@ -30,6 +30,8 @@ type Props = {
   maximumTrackTintColor?: string,
   yearSlider?: Slider.propTypes.style,
   yearText?: Text.propTypes.style,
+  // allowFontScaling
+  allowFontScaling?: boolean
 };
 type State = {
   year: Number,
@@ -71,7 +73,7 @@ export default class YearSelector extends Component {
           onSlidingComplete={(year) => this._onFocus(year)}
           style={[this.props.yearSlider]}
           />
-        <Text style={[styles.yearText, this.props.yearText]}>
+        <Text allowFontScaling={this.props.allowFontScaling} style={[styles.yearText, this.props.yearText]}>
           {this.state.year}
         </Text>
       </View>
