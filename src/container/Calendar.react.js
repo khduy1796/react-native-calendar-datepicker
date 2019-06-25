@@ -73,6 +73,8 @@ type Props = {
   yearMaxTintColor?: string,
   yearSlider?: Slider.propTypes.style,
   yearText?: Text.propTypes.style,
+  // allowFontScaling
+  allowFontScaling?: boolean
 };
 type State = {
   stage: Stage,
@@ -166,7 +168,7 @@ export default class Calendar extends Component {
                 underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
                 onPress={this._previousMonth}
               >
-                <Text allowFontScaling={false} style={this.props.barText}>{LEFT_CHEVRON}</Text>
+                <Text allowFontScaling={this.props.allowFontScaling} style={this.props.barText}>{LEFT_CHEVRON}</Text>
               </TouchableHighlight> : <View/>
             }
 
@@ -176,7 +178,7 @@ export default class Calendar extends Component {
               onPress={this._previousStage}
               style={{ alignSelf: 'center' }}
             >
-              <Text allowFontScaling={false} style={this.props.barText}>
+              <Text allowFontScaling={this.props.allowFontScaling} style={this.props.barText}>
                 {this._stageText()}
               </Text>
             </TouchableHighlight>
@@ -187,7 +189,7 @@ export default class Calendar extends Component {
                 underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
                 onPress={this._nextMonth}
               >
-                <Text allowFontScaling={false} style={this.props.barText}>{RIGHT_CHEVRON}</Text>
+                <Text allowFontScaling={this.props.allowFontScaling} style={this.props.barText}>{RIGHT_CHEVRON}</Text>
               </TouchableHighlight> : <View/>
             }
           </View>
