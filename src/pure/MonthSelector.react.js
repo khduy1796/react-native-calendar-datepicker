@@ -32,6 +32,8 @@ type Props = {
   monthText?: Text.propTypes.style,
   monthDisabledText?: Text.propTypes.style,
   selectedText?: Text.propTypes.style,
+  // allowFontScaling
+  allowFontScaling?: boolean
 };
 type State = {
   months: Array<Array<Object>>,
@@ -88,7 +90,7 @@ export default class MonthSelector extends Component {
                 activeOpacity={1}
                 underlayColor='transparent'
                 onPress={() => month.valid && this._onFocus(month.index)}>
-                <Text style={[
+                <Text allowFontScaling={this.props.allowFontScaling} style={[
                   styles.monthText,
                   this.props.monthText,
                   month.valid ? null : styles.disabledText,
