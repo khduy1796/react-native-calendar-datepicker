@@ -211,8 +211,7 @@ export default class DaySelector extends Component {
                   activeOpacity={day.valid ? 0.8 : 1}
                   underlayColor='transparent'
                   onPress={() => day.valid && this._onChange(day)}>
-                  <Text 
-                    style={[
+                  <Text allowFontScaling={this.props.allowFontScaling} style={[
                       styles.dayText,
                       this.props.dayText,
                       day.today ? this.props.dayTodayText : null,
@@ -220,9 +219,7 @@ export default class DaySelector extends Component {
                       day.selected ? this.props.daySelectedText : null,
                       day.valid ? null : styles.disabledText,
                       day.valid ? null : this.props.dayDisabledText,
-                    ]}
-                    allowFontScaling={this.props.allowFontScaling}
-                  >
+                   ]}>
                     {day.date}
                   </Text>
                 </TouchableHighlight>
