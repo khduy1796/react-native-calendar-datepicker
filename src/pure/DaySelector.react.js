@@ -41,6 +41,8 @@ type Props = {
   dayTodayText?: Text.propTypes.style,
   daySelectedText?: Text.propTypes.style,
   dayDisabledText?: Text.propTypes.style,
+  // allowFontScaling
+  allowFontScaling?: boolean
 };
 type State = {
   days: Array<Array<Object>>,
@@ -184,7 +186,7 @@ export default class DaySelector extends Component {
       <View>
         <View style={[styles.headerView, this.props.dayHeaderView]}>
           {_.map(Moment.weekdaysShort(true), (day) =>
-            <Text key={day} style={[styles.headerText, this.props.dayHeaderText]}>
+            <Text allowFontScaling={this.props.allowFontScaling} key={day} style={[styles.headerText, this.props.dayHeaderText]}>
               {day}
             </Text>
           )}
@@ -209,15 +211,15 @@ export default class DaySelector extends Component {
                   activeOpacity={day.valid ? 0.8 : 1}
                   underlayColor='transparent'
                   onPress={() => day.valid && this._onChange(day)}>
-                  <Text style={[
-                    styles.dayText,
-                    this.props.dayText,
-                    day.today ? this.props.dayTodayText : null,
-                    day.selected ? styles.selectedText : null,
-                    day.selected ? this.props.daySelectedText : null,
-                    day.valid ? null : styles.disabledText,
-                    day.valid ? null : this.props.dayDisabledText,
-                  ]}>
+                  <Text allowFontScaling={this.props.allowFontScaling} style={[
+                      styles.dayText,
+                      this.props.dayText,
+                      day.today ? this.props.dayTodayText : null,
+                      day.selected ? styles.selectedText : null,
+                      day.selected ? this.props.daySelectedText : null,
+                      day.valid ? null : styles.disabledText,
+                      day.valid ? null : this.props.dayDisabledText,
+                   ]}>
                     {day.date}
                   </Text>
                 </TouchableHighlight>
