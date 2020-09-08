@@ -26,9 +26,9 @@ import MonthSelector from '../pure/MonthSelector.react';
 import DaySelector from '../pure/DaySelector.react';
 
 type Stage = "day" | "month" | "year";
-const DAY_SELECTOR : Stage = "day";
-const MONTH_SELECTOR : Stage = "month";
-const YEAR_SELECTOR : Stage = "year";
+const DAY_SELECTOR: Stage = "day";
+const MONTH_SELECTOR: Stage = "month";
+const YEAR_SELECTOR: Stage = "year";
 
 // Unicode characters
 const LEFT_CHEVRON = '\u276E';
@@ -38,6 +38,10 @@ type Props = {
   // The core properties.
   selected?: Moment,
   onChange?: (date: Moment) => void,
+
+  leftChevronComponent?: React.ReactNode,
+  rightChevronComponent?: React.ReactNode,
+
   slideThreshold?: number,
   // Minimum and maximum date.
   minDate: Moment,
@@ -91,7 +95,7 @@ export default class Calendar extends Component {
   constructor(props: Props) {
     super(props);
     const stage = String(props.startStage) < String(props.finalStage) ?
-                  props.finalStage : props.startStage;
+      props.finalStage : props.startStage;
     this.state = {
       stage: stage,
       focus: Moment(props.selected).startOf('month'),
@@ -99,7 +103,7 @@ export default class Calendar extends Component {
     }
   }
 
-  _stageText = () : string => {
+  _stageText = (): string => {
     if (this.state.stage === DAY_SELECTOR) {
       return this.state.focus.format('MMMM YYYY');
     } else {
@@ -107,38 +111,38 @@ export default class Calendar extends Component {
     }
   }
 
-  _previousStage = () : void => {
+  _previousStage = (): void => {
     if (this.state.stage === DAY_SELECTOR) {
-      this.setState({stage: MONTH_SELECTOR})
+      this.setState({ stage: MONTH_SELECTOR })
     }
     if (this.state.stage === MONTH_SELECTOR) {
-      this.setState({stage: YEAR_SELECTOR})
+      this.setState({ stage: YEAR_SELECTOR })
     }
     LayoutAnimation.easeInEaseOut();
   };
 
-  _nextStage = () : void => {
+  _nextStage = (): void => {
     if (this.state.stage === MONTH_SELECTOR) {
-      this.setState({stage: DAY_SELECTOR})
+      this.setState({ stage: DAY_SELECTOR })
     }
     if (this.state.stage === YEAR_SELECTOR) {
-      this.setState({stage: MONTH_SELECTOR})
+      this.setState({ stage: MONTH_SELECTOR })
     }
     LayoutAnimation.easeInEaseOut();
   };
 
-  _previousMonth = () : void => {
-    this.setState({monthOffset: -1});
+  _previousMonth = (): void => {
+    this.setState({ monthOffset: -1 });
   };
 
-  _nextMonth = () : void => {
-    this.setState({monthOffset: 1});
+  _nextMonth = (): void => {
+    this.setState({ monthOffset: 1 });
   };
 
-  _changeFocus = (focus : Moment) : void => {
-    this.setState({focus, monthOffset: 0});
+  _changeFocus = (focus: Moment): void => {
+    this.setState({ focus, monthOffset: 0 });
     if (this.props.finalStage != DAY_SELECTOR &&
-        this.state.stage == this.props.finalStage) {
+      this.state.stage == this.props.finalStage) {
       this.props.onChange && this.props.onChange(focus);
     } else {
       this._nextStage();
@@ -157,19 +161,24 @@ export default class Calendar extends Component {
       <View style={[{
         minWidth: 300,
         // Wrapper view default style.
-      },this.props.style]}>
+      }, this.props.style]}>
         <View style={{
           flexDirection: 'row',
         }}>
           <View style={[styles.barView, this.props.barView]}>
-            { this.props.showArrows && this.state.stage === DAY_SELECTOR && previousMonthValid ?
-              <TouchableHighlight
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
-                onPress={this._previousMonth}
-              >
-                <Text allowFontScaling={this.props.allowFontScaling} style={this.props.barText}>{LEFT_CHEVRON}</Text>
-              </TouchableHighlight> : <View/>
+            {this.props.showArrows && this.state.stage === DAY_SELECTOR && previousMonthValid ?
+              this.props.leftChevronComponent ?
+                this.props.leftChevronComponent
+                :
+                <TouchableHighlight
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
+                  onPress={this._previousMonth}
+                >
+                  <Text allowFontScaling={this.props.allowFontScaling} style={this.props.barText}>{LEFT_CHEVRON}</Text>
+                </TouchableHighlight>
+              :
+              <View />
             }
 
             <TouchableHighlight
@@ -183,14 +192,19 @@ export default class Calendar extends Component {
               </Text>
             </TouchableHighlight>
 
-            { this.props.showArrows && this.state.stage === DAY_SELECTOR && nextMonthValid ?
-              <TouchableHighlight
-                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
-                onPress={this._nextMonth}
-              >
-                <Text allowFontScaling={this.props.allowFontScaling} style={this.props.barText}>{RIGHT_CHEVRON}</Text>
-              </TouchableHighlight> : <View/>
+            {this.props.showArrows && this.state.stage === DAY_SELECTOR && nextMonthValid ?
+              this.props.rightChevronComponent ?
+                this.props.rightChevronComponent
+                :
+                <TouchableHighlight
+                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
+                  onPress={this._nextMonth}
+                >
+                  <Text allowFontScaling={this.props.allowFontScaling} style={this.props.barText}>{RIGHT_CHEVRON}</Text>
+                </TouchableHighlight>
+              :
+              <View />
             }
           </View>
         </View>
@@ -198,58 +212,58 @@ export default class Calendar extends Component {
           style={[styles.stageWrapper, this.props.stageView]}>
           {
             this.state.stage === DAY_SELECTOR ?
-            <DaySelector
-              focus={this.state.focus}
-              selected={this.props.selected}
-              onFocus={this._changeFocus}
-              onChange={(date) => this.props.onChange && this.props.onChange(date)}
-              monthOffset={this.state.monthOffset}
-              minDate={this.props.minDate}
-              maxDate={this.props.maxDate}
-              // Control properties
-              slideThreshold={this.props.slideThreshold}
-              // Transfer the corresponding styling properties.
-              dayHeaderView={this.props.dayHeaderView}
-              dayHeaderText={this.props.dayHeaderText}
-              dayRowView={this.props.dayRowView}
-              dayView={this.props.dayView}
-              daySelectedView={this.props.daySelectedView}
-              dayText={this.props.dayText}
-              dayTodayText={this.props.dayTodayText}
-              daySelectedText={this.props.daySelectedText}
-              dayDisabledText={this.props.dayDisabledText}
-              // allowFontScaling
-              allowFontScaling={this.props.allowFontScaling}
+              <DaySelector
+                focus={this.state.focus}
+                selected={this.props.selected}
+                onFocus={this._changeFocus}
+                onChange={(date) => this.props.onChange && this.props.onChange(date)}
+                monthOffset={this.state.monthOffset}
+                minDate={this.props.minDate}
+                maxDate={this.props.maxDate}
+                // Control properties
+                slideThreshold={this.props.slideThreshold}
+                // Transfer the corresponding styling properties.
+                dayHeaderView={this.props.dayHeaderView}
+                dayHeaderText={this.props.dayHeaderText}
+                dayRowView={this.props.dayRowView}
+                dayView={this.props.dayView}
+                daySelectedView={this.props.daySelectedView}
+                dayText={this.props.dayText}
+                dayTodayText={this.props.dayTodayText}
+                daySelectedText={this.props.daySelectedText}
+                dayDisabledText={this.props.dayDisabledText}
+                // allowFontScaling
+                allowFontScaling={this.props.allowFontScaling}
               /> :
-            this.state.stage === MONTH_SELECTOR ?
-            <MonthSelector
-              focus={this.state.focus}
-              selected={this.props.selected}
-              onFocus={this._changeFocus}
-              minDate={this.props.minDate}
-              maxDate={this.props.maxDate}
-              // Styling properties
-              monthText={this.props.monthText}
-              monthDisabledText={this.props.monthDisabledText}
-              selectedText={this.props.monthSelectedText}
-              // allowFontScaling
-              allowFontScaling={this.props.allowFontScaling}
-              /> :
-            this.state.stage === YEAR_SELECTOR ?
-            <YearSelector
-              focus={this.state.focus}
-              onFocus={this._changeFocus}
-              minDate={this.props.minDate}
-              maxDate={this.props.maxDate}
-              // Styling properties
-              minimumTrackTintColor={this.props.yearMinTintColor}
-              maximumTrackTintColor={this.props.yearMaxTintColor}
-              yearSlider={this.props.yearSlider}
-              yearText={this.props.yearText}
-              // allowFontScaling
-              allowFontScaling={this.props.allowFontScaling}
-              /> :
-            null
+              this.state.stage === MONTH_SELECTOR ?
+                <MonthSelector
+                  focus={this.state.focus}
+                  selected={this.props.selected}
+                  onFocus={this._changeFocus}
+                  minDate={this.props.minDate}
+                  maxDate={this.props.maxDate}
+                  // Styling properties
+                  monthText={this.props.monthText}
+                  monthDisabledText={this.props.monthDisabledText}
+                  selectedText={this.props.monthSelectedText}
+                  // allowFontScaling
+                  allowFontScaling={this.props.allowFontScaling}
+                /> :
+                this.state.stage === YEAR_SELECTOR ?
+                  <YearSelector
+                    focus={this.state.focus}
+                    onFocus={this._changeFocus}
+                    minDate={this.props.minDate}
+                    maxDate={this.props.maxDate}
+                    // Styling properties
+                    minimumTrackTintColor={this.props.yearMinTintColor}
+                    maximumTrackTintColor={this.props.yearMaxTintColor}
+                    yearSlider={this.props.yearSlider}
+                    yearText={this.props.yearText}
+                    // allowFontScaling
+                    allowFontScaling={this.props.allowFontScaling}
+                  /> :
+                  null
           }
         </View>
       </View>
