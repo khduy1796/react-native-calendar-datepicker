@@ -167,16 +167,17 @@ export default class Calendar extends Component {
         }}>
           <View style={[styles.barView, this.props.barView]}>
             {this.props.showArrows && this.state.stage === DAY_SELECTOR && previousMonthValid ?
-              this.props.leftChevronComponent ?
-                this.props.leftChevronComponent
-                :
-                <TouchableHighlight
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                  underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
-                  onPress={this._previousMonth}
-                >
+              <TouchableHighlight
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
+                onPress={this._previousMonth}
+              >
+                {this.props.leftChevronComponent ?
+                  this.props.leftChevronComponent
+                  :
                   <Text allowFontScaling={this.props.allowFontScaling} style={this.props.barText}>{LEFT_CHEVRON}</Text>
-                </TouchableHighlight>
+                }
+              </TouchableHighlight>
               :
               <View />
             }
@@ -193,16 +194,17 @@ export default class Calendar extends Component {
             </TouchableHighlight>
 
             {this.props.showArrows && this.state.stage === DAY_SELECTOR && nextMonthValid ?
-              this.props.rightChevronComponent ?
-                this.props.rightChevronComponent
-                :
-                <TouchableHighlight
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                  underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
-                  onPress={this._nextMonth}
-                >
+              <TouchableHighlight
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                underlayColor={barStyle ? barStyle.backgroundColor : 'transparent'}
+                onPress={this._nextMonth}
+              >
+                {this.props.rightChevronComponent ?
+                  this.props.rightChevronComponent
+                  :
                   <Text allowFontScaling={this.props.allowFontScaling} style={this.props.barText}>{RIGHT_CHEVRON}</Text>
-                </TouchableHighlight>
+                }
+              </TouchableHighlight>
               :
               <View />
             }
