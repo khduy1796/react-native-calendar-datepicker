@@ -79,6 +79,7 @@ type Props = {
   yearText?: Text.propTypes.style,
   // allowFontScaling
   allowFontScaling?: boolean
+  allowSwipe?: boolean
 };
 type State = {
   stage: Stage,
@@ -236,6 +237,7 @@ export default class Calendar extends Component {
                 dayDisabledText={this.props.dayDisabledText}
                 // allowFontScaling
                 allowFontScaling={this.props.allowFontScaling}
+                allowSwipe={this.props.allowSwipe}
               /> :
               this.state.stage === MONTH_SELECTOR ?
                 <MonthSelector
