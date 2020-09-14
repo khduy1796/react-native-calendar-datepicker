@@ -139,6 +139,8 @@ export default class DaySelector extends Component {
           return true;
         },
       });
+    } else {
+      this._panResponder = {}
     }
   }
 
