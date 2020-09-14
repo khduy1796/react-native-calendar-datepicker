@@ -42,7 +42,7 @@ type Props = {
   daySelectedText?: Text.propTypes.style,
   dayDisabledText?: Text.propTypes.style,
   // allowFontScaling
-  allowFontScaling?: boolean
+  allowFontScaling?: boolean,
   allowSwipe?: boolean
 };
 type State = {
@@ -71,7 +71,7 @@ export default class DaySelector extends Component {
   };
 
   componentWillMount() {
-    if (allowSwipe) {
+    if (this.props.allowSwipe) {
       // Hook the pan responder to interpretate gestures.
       this._panResponder = PanResponder.create({
         // Ask to be the responder:

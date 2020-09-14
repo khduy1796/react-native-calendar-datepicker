@@ -78,7 +78,7 @@ type Props = {
   yearSlider?: Slider.propTypes.style,
   yearText?: Text.propTypes.style,
   // allowFontScaling
-  allowFontScaling?: boolean
+  allowFontScaling?: boolean,
   allowSwipe?: boolean
 };
 type State = {
